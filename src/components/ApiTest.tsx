@@ -81,8 +81,6 @@ const ApiTest: FC = () => {
     }
   };
 
-  console.log('ENV TOKEN:', process.env.REACT_APP_GITHUB_TOKEN);
-
   return (
     <Box p={5} shadow="md" borderWidth="1px" borderRadius="md">
       <VStack spacing={4} align="stretch">
