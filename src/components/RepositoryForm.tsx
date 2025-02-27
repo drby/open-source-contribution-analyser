@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Box,
@@ -25,7 +25,7 @@ interface FormValues {
   repo: string;
 }
 
-const RepositoryForm: React.FC<RepositoryFormProps> = ({
+const RepositoryForm:FC<RepositoryFormProps> = ({
   setRepository,
   setContributors,
   setIsLoading,

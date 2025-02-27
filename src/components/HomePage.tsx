@@ -6,7 +6,7 @@ import { Repository, Contributor } from '../services/github/types';
 const HomePage: React.FC = () => {
   const [repository, setRepository] = useState<Repository | null>(null);
   const [contributors, setContributors] = useState<Contributor[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false); // use loading state later
   const [error, setError] = useState<string | null>(null);
 
   return (
