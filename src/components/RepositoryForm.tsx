@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { useForm } from 'react-hook-form';
+import { Dispatch, FC, SetStateAction } from 'react';
+
 import {
   Box,
   Button,
@@ -10,14 +10,16 @@ import {
   VStack,
   HStack,
 } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+
 import { githubApi } from '../services/github/api';
-import { Contributor, Repository } from '../services/github/types';
+import { Contributor, Repository } from '../services/github/types/types';
 
 interface RepositoryFormProps {
-  setRepository: React.Dispatch<React.SetStateAction<Repository | null>>;
-  setContributors: React.Dispatch<React.SetStateAction<Contributor[]>>;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  setRepository: Dispatch<SetStateAction<Repository | null>>;
+  setContributors: Dispatch<SetStateAction<Contributor[]>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setError: Dispatch<SetStateAction<string | null>>;
 }
 
 interface FormValues {
@@ -47,15 +49,13 @@ const RepositoryForm:FC<RepositoryFormProps> = ({
       setIsLoading(true);
       setError(null);
 
-      // Fetch repository data
       const repoData = await githubApi.getRepository(values.owner, values.repo);
       setRepository(repoData);
 
-      // Fetch contributor data with details
       const contributorData = await githubApi.getContributorsWithDetails(values.owner, values.repo);
       setContributors(contributorData);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unknown error occurred');
+      setError(error instanceof Error ? error.message : 'An unknown error occurred, maybe a wizard can help');
       setRepository(null);
       setContributors([]);
     } finally {
@@ -94,7 +94,6 @@ const RepositoryForm:FC<RepositoryFormProps> = ({
 
         <Button
           mt={4}
-          colorScheme="blue"
           isLoading={isSubmitting}
           type="submit"
         >

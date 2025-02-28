@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Box, Button, Code, Heading, Input, Stack, Text, VStack, useToast } from '@chakra-ui/react';
 import { githubApi } from '../services/github/api';
-import { Contributor, Repository } from '../services/github/types';
+import { Contributor, Repository } from '../services/github/types/types';
 import config from '../config';
 
 const ApiTest: FC = () => {

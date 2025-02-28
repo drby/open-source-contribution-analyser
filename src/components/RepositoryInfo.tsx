@@ -1,0 +1,68 @@
+import React from 'react';
+
+import {
+  Box,
+  Heading,
+  Text,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatGroup,
+  Badge,
+  Flex,
+  Icon,
+  Divider,
+} from '@chakra-ui/react';
+import { StarIcon } from '@chakra-ui/icons';
+
+import { Repository } from '../services/github/types/types';
+
+interface RepositoryInfoProps {
+  repository: Repository;
+}
+
+const RepositoryInfo: React.FC<RepositoryInfoProps> = ({ repository }) => {
+  return (
+    <Box p={5} bg="white" borderRadius="md" boxShadow="sm">
+      <Flex justifyContent="space-between" alignItems="flex-start" mb={3}>
+        <Box>
+          <Heading size="lg">{repository.name}</Heading>
+          <Text color="gray.600" mt={1}>{repository.description || 'No description provided'}</Text>
+        </Box>
+        <Flex alignItems="center">
+          {repository.language && (
+            <Badge colorScheme="blue" mr={2} px={2} py={1}>
+              {repository.language}
+            </Badge>
+          )}
+          {repository.license && (
+            <Badge colorScheme="green" px={2} py={1}>
+              {repository.license.name}
+            </Badge>
+          )}
+        </Flex>
+      </Flex>
+
+      <Divider my={4} />
+
+      <StatGroup>
+        <Stat>
+          <StatLabel>Stars</StatLabel>
+          <StatNumber>
+            <Flex alignItems="center">
+              <Icon as={StarIcon} color="yellow.400" mr={1} />
+              {repository.stargazers_count.toLocaleString()}
+            </Flex>
+          </StatNumber>
+        </Stat>
+
+        <Stat>
+          <StatLabel>Followers</StatLabel>
+          <StatNumber>{repository.subscribers_count.toLocaleString()}</StatNumber>
+        </Stat>
+      </StatGroup>
+    </Box>
+  );
+};
+
+export default RepositoryInfo;
