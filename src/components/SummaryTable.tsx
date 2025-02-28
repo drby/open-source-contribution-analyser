@@ -11,7 +11,6 @@ import {
   Th,
   Td,
   Text,
-  Divider,
   Badge,
   Flex,
   IconButton,
@@ -97,7 +96,7 @@ const SummaryTables: FC<SummaryTablesProps> = ({ contributors }) => {
           <Flex justifyContent="space-between" alignItems="center" mb={3}>
             <Heading size="md">Top Companies</Heading>
             <IconButton
-              icon={<InfoIcon ml={1} />}
+              icon={<InfoIcon />}
               aria-label="View charts"
               size="sm"
               colorScheme="blue"
@@ -135,10 +134,18 @@ const SummaryTables: FC<SummaryTablesProps> = ({ contributors }) => {
           </Table>
         </Box>
 
-        <Divider />
-
         <Box>
+          <Flex justifyContent="space-between" alignItems="center" mb={3}>
           <Heading size="md" mb={3}>Top Locations</Heading>
+          <IconButton
+              icon={<InfoIcon />}
+              aria-label="View charts"
+              size="sm"
+              colorScheme="blue"
+              variant="ghost"
+              onClick={onOpen}
+            />
+          </Flex>
           <Table variant="simple" size="sm">
             <Thead>
               <Tr>
