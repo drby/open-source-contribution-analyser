@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { Contributor, Repository, User } from './types';
+import { Contributor, Repository, User } from './types/types';
 import config from '../../config';
 
 class GitHubApiService {

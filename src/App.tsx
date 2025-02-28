@@ -1,36 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Box, Container, Flex, Heading, Text, Button, Stack } from '@chakra-ui/react';
-import ApiTest from './components/ApiTest';
-import HomePage from './components/HomePage';
+import { FC } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const App: React.FC = () => {
+import {ApiTest, HomePage } from './pages';
+import { Footer, Navbar } from './components';
+import { Box, Container, Heading, Text } from '@chakra-ui/react';
+
+const App: FC = () => {
   return (
     <Router>
-      <Container maxW="container.lg" py={8}>
-        <Box textAlign="center" mb={8}>
-          <Heading as="h1" size="xl" mb={2}>
-            Open-Source Contribution Analyzer
-          </Heading>
-          <Text color="gray.600" mb={6}>
-            Analyze contributors and companies behind popular GitHub repositories
-          </Text>
+      <Box minH="100vh" bg="gray.50">
+        <Navbar />
+        <Container maxW="100%" py={6}>
+          <Box textAlign="center" mb={8}>
+            <Heading as="h1" size="xl" mb={2}>
+              Open-Source Contribution Analyzer
+            </Heading>
+            <Text color="gray.600">
+              Analyze contributors and companies behind popular GitHub repositories
+            </Text>
+          </Box>
 
-          <Flex justify="center" gap={4}>
-            <Link to="/">
-              <Button colorScheme="blue">Home</Button>
-            </Link>
-            <Link to="/api-test">
-              <Button colorScheme="gray">API Tester</Button>
-            </Link>
-          </Flex>
-        </Box>
-
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/api-test" element={<ApiTest />} />
-        </Routes>
-      </Container>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/api-test" element={<ApiTest />} />
+          </Routes>
+        </Container>
+      </Box>
+      <Footer />
     </Router>
   );
 };
