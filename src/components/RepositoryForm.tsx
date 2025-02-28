@@ -12,12 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 
-import { githubApi } from '../services/github/api';
-import { Contributor, Repository } from '../services/github/types/types';
-
 interface RepositoryFormProps {
-  setRepository: Dispatch<SetStateAction<Repository | null>>;
-  setContributors: Dispatch<SetStateAction<Contributor[]>>;
+  onSubmit: (owner: string, repo: string) => Promise<void>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   setError: Dispatch<SetStateAction<string | null>>;
 }
@@ -27,10 +23,8 @@ interface FormValues {
   repo: string;
 }
 
-const RepositoryForm:FC<RepositoryFormProps> = ({
-  setRepository,
-  setContributors,
-  setIsLoading,
+const RepositoryForm: FC<RepositoryFormProps> = ({
+  onSubmit,
   setError,
 }) => {
   const {
@@ -44,27 +38,16 @@ const RepositoryForm:FC<RepositoryFormProps> = ({
     },
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const handleFormSubmit = async (values: FormValues) => {
     try {
-      setIsLoading(true);
-      setError(null);
-
-      const repoData = await githubApi.getRepository(values.owner, values.repo);
-      setRepository(repoData);
-
-      const contributorData = await githubApi.getContributorsWithDetails(values.owner, values.repo);
-      setContributors(contributorData);
+      await onSubmit(values.owner, values.repo);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unknown error occurred, maybe a wizard can help');
-      setRepository(null);
-      setContributors([]);
-    } finally {
-      setIsLoading(false);
+      setError(error instanceof Error ? error.message : 'An unknown error occurred');
     }
   };
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)} p={6} bg="white" borderRadius="md" boxShadow="sm">
+    <Box as="form" onSubmit={handleSubmit(handleFormSubmit)} p={6} bg="white" borderRadius="md" boxShadow="sm">
       <VStack spacing={4} align="stretch">
         <HStack spacing={4} align="flex-start">
           <FormControl isInvalid={!!errors.owner}>
