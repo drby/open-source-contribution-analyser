@@ -1,10 +1,10 @@
 import { Repository } from '../github/types/types';
 
 // Re-export everything from the service
-export * from './recentSearches';
+export * from './bookmarks';
 
 // Export the types
-export interface RecentSearch {
+export interface Bookmark {
   id: string;
   owner: string;
   repo: string;

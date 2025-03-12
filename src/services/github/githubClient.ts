@@ -5,15 +5,15 @@ import config from '../../config';
 const api = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
-    'Accept': 'application/vnd.github.v3+json',
+    'Accept': 'application/vnd.github.application/vnd.github.v3',
   },
 });
 
-// Module state
 let token: string | null = null;
 
 // Initialize from environment if available
 const envToken = config.github.token;
+
 if (envToken) {
   setToken(envToken);
 }

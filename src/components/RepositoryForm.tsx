@@ -23,31 +23,25 @@ interface FormValues {
   repo: string;
 }
 
-const RepositoryForm: FC<RepositoryFormProps> = ({
-  onSubmit,
-  setError,
-}) => {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+const RepositoryForm: FC<RepositoryFormProps> = ({ onSubmit, setError }) => {
+
+  const { handleSubmit, register, formState: { errors, isSubmitting } } = useForm<FormValues>({
     defaultValues: {
       owner: '',
       repo: '',
     },
   });
 
-  const handleFormSubmit = async (values: FormValues) => {
+  const onFormSubmit = handleSubmit(async (values: FormValues) => {
     try {
       await onSubmit(values.owner, values.repo);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'An unknown error occurred');
+      setError(error instanceof Error ? error.message : 'An unknown error occurred, try not having an error');
     }
-  };
+  });
 
   return (
-    <Box as="form" onSubmit={handleSubmit(handleFormSubmit)} p={6} bg="white" borderRadius="md" boxShadow="sm">
+    <Box as="form" onSubmit={onFormSubmit} p={6} bg="white" borderRadius="md" boxShadow="sm">
       <VStack spacing={4} align="stretch">
         <HStack spacing={4} align="flex-start">
           <FormControl isInvalid={!!errors.owner}>
