@@ -15,20 +15,20 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon, StarIcon } from '@chakra-ui/icons';
 
-import { RecentSearch, getRecentSearches, removeRecentSearch } from '../services/recentSearches';
+import { Bookmark, getBookmarks, removeBookmark } from '../services/bookmarks';
 
-interface RecentSearchesProps {
+interface BookmarksProps {
   onSelectSearch: (owner: string, repo: string) => void;
 }
 
-const RecentSearches: FC<RecentSearchesProps> = ({ onSelectSearch }) => {
-  const [searches, setSearches] = useState<RecentSearch[]>([]);
+const Bookmarks: FC<BookmarksProps> = ({ onSelectSearch }) => {
+  const [searches, setSearches] = useState<Bookmark[]>([]);
   const toast = useToast();
 
-  // Load recent searches on page load and refresh when localStorage changes
+  // Load bookmarks on page load and refresh when localStorage changes
   useEffect(() => {
     const loadSearches = () => {
-      setSearches(getRecentSearches());
+      setSearches(getBookmarks());
     };
 
     loadSearches();
@@ -50,11 +50,11 @@ const RecentSearches: FC<RecentSearchesProps> = ({ onSelectSearch }) => {
     });
   };
 
-  // Handle removing a search
+  // Handle removing a bookmark
   const handleRemove = (id: string, e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering the parent card's onClick
-    removeRecentSearch(id);
-    setSearches(getRecentSearches());
+    removeBookmark(id);
+    setSearches(getBookmarks());
 
     toast({
       title: "Search removed",
@@ -70,7 +70,7 @@ const RecentSearches: FC<RecentSearchesProps> = ({ onSelectSearch }) => {
 
   return (
     <Box mt={6}>
-      <Heading size="md" mb={3}>Recent Searches</Heading>
+      <Heading size="md" mb={3}>Bookmarks</Heading>
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
         {searches.map((search) => (
           <Card
@@ -81,7 +81,7 @@ const RecentSearches: FC<RecentSearchesProps> = ({ onSelectSearch }) => {
             transition="all 0.2s"
           >
             <CardBody position="relative">
-              <Tooltip label="Remove from recent searches" placement="top">
+              <Tooltip label="Remove from bookmarks" placement="top">
                 <IconButton
                   size="xs"
                   icon={<CloseIcon />}
@@ -127,4 +127,4 @@ const RecentSearches: FC<RecentSearchesProps> = ({ onSelectSearch }) => {
   );
 };
 
-export default RecentSearches;
+export default Bookmarks;

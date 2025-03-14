@@ -18,7 +18,7 @@ import {
 import { StarIcon, PlusSquareIcon } from '@chakra-ui/icons';
 
 import { Repository } from '../services/github/types/types';
-import { saveRecentSearch } from '../services/recentSearches';
+import { saveBookmark } from '../services/bookmarks';
 
 interface RepositoryInfoProps {
   repository: Repository;
@@ -30,10 +30,10 @@ const RepositoryInfo: FC<RepositoryInfoProps> = ({ repository, owner, repo }) =>
   const toast = useToast();
 
   const handleSaveSearch = () => {
-    saveRecentSearch(owner, repo, repository);
+    saveBookmark(owner, repo, repository);
     toast({
       title: "Search saved",
-      description: "This repository has been added to your recent searches",
+      description: "This repository has been added to your bookmarks",
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -88,7 +88,7 @@ const RepositoryInfo: FC<RepositoryInfoProps> = ({ repository, owner, repo }) =>
           size="sm"
           onClick={handleSaveSearch}
         >
-          Save to Recent
+          Add to bookmarks
         </Button>
       </Flex>
     </Box>
